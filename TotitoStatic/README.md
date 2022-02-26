@@ -2,6 +2,8 @@
 
 A continuación voy a hacer una breve descripción de una solución para un juego de totito el cual permita jugar contra la computadora, la computadora debe realizar el tiro más inteligente posible.
 
+En el siguiente enlace se encuentran tres vídeos de como lo elaboramos paso a paso [Enlace de vídeos](https://www.youtube.com/playlist?list=PL3Fp-jy-GCuVY-HzCIMLZxXeTUNw7q5-R)
+
 ## Consideraciones
  
  Es para el curso de programación de computadoras 1 del CUNOC/USAC, el objetivo de este ejemplo es mostrar las ventajas de utilizar programación modular, por esta razón no se usaran clases. Por lo tanto la solución estará en consola. 
