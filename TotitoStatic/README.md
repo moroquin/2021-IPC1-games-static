@@ -3,7 +3,7 @@
 A continuación voy a hacer una breve descripción de una solución para un juego de totito el cual permita jugar contra la computadora, la computadora debe realizar el tiro más inteligente posible.
 
 ## Consideraciones
-
+ 
  Es para el curso de programación de computadoras 1 del CUNOC/USAC, el objetivo de este ejemplo es mostrar las ventajas de utilizar programación modular, por esta razón no se usaran clases. Por lo tanto la solución estará en consola. 
 
  ## Ejecución
@@ -17,7 +17,8 @@ A continuación voy a hacer una breve descripción de una solución para un jueg
  ## Acerca del juego 
 
 El juego consiste en que se tiene una matriz de tres por tres en la que dos jugadores en cada turno pueden poner una ficha, usualmente se usa "X" y "O". El objetivo es conseguir tres figuras iguales contiguas, puede ser horizontal, vertical u oblicuo. 
-
+<a name="etiqueta"></a>
+##titulo
  ![Juego inicial](./img/matriz_principal_0.png)
 
 En la siguiente gráfica se muestra en verde partidas en las cuales el jugador gana, en rojo se muestran la posición de fichas que no funcionan para ganar. 
@@ -30,26 +31,27 @@ En la siguiente gráfica se muestra en verde partidas en las cuales el jugador g
 
  No describire cada parte del pensamiento computacional, me enfocaré más en la parte de la descomposición. La solución completa la dividimos de la siguiente manera:
 
-0. Manejar la información de la partida
-1. Pintar el tablero 
+0. [Manejar la información de la partida](#0-informacion-partida)
+1. [Pintar el tablero](#1-pintar-tablero)
     * Pintar una casilla
     * Pintar casillas contiguas 
     * Pintar el tablero completo
-2. Tiro del usuario
+2. [Tiro del usuario](#2-tiro-del-usuario)
     * Solicitar coordenadas 
     * Verficiar que el tiro sea posible
     * Agregarlo al juego 
-3. Tiro de la computadora
+3. [Tiro de la computadora](#3-tiro-de-la-computadora)
     * Verificar los espacios disponibles para tirar
     * Valorar para encontrar el mejor tiro
     * Realizar el tiro 
-4. Lógica del juego
+4. [Lógica del juego](#4-logica-juego)
     * Random para los jugadores
     * Inicializar variables
     * Permitir que los jugadores tiren
     * Verificar que si hay tiros posibles aún
     * Verificar si hay un ganador
 
+<a name="0-informacion-partida"></a>
 ### 0. Manejar la información de la partida
 
 Para pintar el tablero primero revisamos como guardar nuestra matriz para manejar la información de la partida. Utilizaremos una matriz de enteros. La información del tablero la vamos abstraer de la siguiente manera: 
@@ -67,7 +69,7 @@ Por lo tanto la información es representada de la siguiente manera:
 * **0**: representa una casilla vacía
 * **1**: representa una ocupada por "X"
 * **2**: representa una ocupada por "O"
-
+<a name="1-pintar-tablero"></a>
 ### 1. Pintar el tablero
 
 Ya que definimos la forma de manejar la información de la partida, ahora vamos a ver la forma de pintar el tablero de una manera más agradable que solo utilizar un carácter para representar cada parte del tablero. 
@@ -86,11 +88,11 @@ Para esto utilizamos los métodos en el código:
 
 * **pintarFila**: el cual recibe el tipo de casilla que se debe de pintar y retorna 4 carácteres para pintar una línea en específico de la casilla. 
 * **pintarTablero**: recorre toda la matriz y utiliza pintarFila para poner una parte de la línea a la par de la otra hasta tener el tablero completo. 
-
+<a name="2-tiro-del-usuario"></a>
 ### 2. Tiro del usuario 
 
 Para manejar el tiro del usuario solo tenemos un método que se encarga de solicitar el lugar donde quiere hacer su siguiente jugada, revisa que realmente el espacio este vacio, de lo contrario solicita que se vuelva a pedir una posición valida.  
-
+<a name="3-tiro-de-la-computadora"></a>
 ### 3. Tiro de la computadora
 
 Esta parte se vuelve un poco más compleja, y necesitamos definir un procedimiento para que la computadora pueda elegir el tiro que le convenga más. Para esto vamos a responder las siguientes preguntas y asignarle una prioridad:
@@ -131,3 +133,16 @@ Si tomamos en cuenta que estamos ubicados en la posición **[y][x]** debemos de 
 * **Vertical**: debemos revisar las posibilidades hacía arriba y abajo. 
 * **Horizontal**: debemos revisar las posibilidades de derecha a izquierda
 * **Diagonal**: debemos tomar en cuenta las posibilidades en diagonal. 
+<a name="4-logica-juego"></a>
+### Lógica del juego
+
+La lógica del juego es bastante sencilla, al inicial la partida hay un random para decidir el jugador que inicia con la partida, tambien hay una parte de estadisticas. Se encarga de revisar si hay un jugador que haya ganado a cada tiro de los jugadores. 
+
+A continuación se muestra el funcionamiento del juego
+
+![juego 1](./img/juego-1.png) ![juego 2](./img/juego-2.png)
+![juego 3](./img/juego-3.png) ![juego 4](./img/juego-4.png)
+![juego 5](./img/juego-5.png) ![juego 6](./img/juego-6.png)
+
+
+

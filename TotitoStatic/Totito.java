@@ -1,4 +1,3 @@
-package TotitoStatic;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,9 +6,6 @@ public class Totito {
     public static Random random = new Random();
 
     public static int[][] matriz = new int[3][3];
-
-    public static int[][][] matrizz = new int[3][20][20];
-    //       matrizz[2][0][0]
 
     // pos cero es el boot pos 1 es el jugador
     public static int[][] matrizEstadisticas = new int[2][3];
@@ -21,8 +17,8 @@ public class Totito {
     // *********** Fin variables del boot
 
     public static void main(String[] args) {
+        
         int opcionSeleccionada = 0;
-
         do {
             System.out.println("\n\nMenu\n");
             System.out.println("1) jugar");
@@ -40,15 +36,13 @@ public class Totito {
                     System.out.println("Gracias por jugar contra la computadora");
                     break;
             }
-
         } while (opcionSeleccionada != 3);
-
     }
 
     public static void estadisticas() {
         System.out.println("\n\nESTADISTICA");
-        System.out.println("BOOT   E "+matrizEstadisticas[0][0]+" G "+matrizEstadisticas[0][1]+" P "+matrizEstadisticas[0][2]);
-        System.out.println("USER   E "+matrizEstadisticas[1][0]+" G "+matrizEstadisticas[1][1]+" P "+matrizEstadisticas[1][2]);
+        System.out.println("BOOT   Empatadas "+matrizEstadisticas[0][0]+" Ganadas "+matrizEstadisticas[0][1]+" Perdidas "+matrizEstadisticas[0][2]);
+        System.out.println("USER   Empatadas "+matrizEstadisticas[1][0]+" Ganadas "+matrizEstadisticas[1][1]+" Perdidas "+matrizEstadisticas[1][2]);
         scanner.nextLine();
     }
 
@@ -65,7 +59,6 @@ public class Totito {
                 matrizEstadisticas[1][1]++;
             }
         }
-
     }
 
     public static void jugar() {
@@ -73,56 +66,42 @@ public class Totito {
         limpiarTablero();
         boolean finDeJuego = false;
         int ganador = 0;
+        System.out.println("\n\nSeleccionando al jugador inicial");
+        System.out.println("De manera aleatoria");
+        scanner.nextLine();
+        boolean bootIniciaJugada = (generarNumeroRandom(0, 1)==1)?true:false;
+        System.out.println("\n****Turno de "+(bootIniciaJugada?"BOOT X":"USUARIO Juega con las fichas \"O\""));
+        scanner.nextLine();
         while (!finDeJuego) {
+           // pintarTablero();
+            System.out.println("\n\n\nTurno de "+(bootIniciaJugada?"BOOT con las fichas \"X\"":"USUARIO con las fichas \"O\""));
+            if (bootIniciaJugada){
+                turnoBoot(2);
+            }
+            else{
+                turnoJugador(1);
+            }
+            bootIniciaJugada = !bootIniciaJugada;
 
-            // revisar que alguien haya ganado
-            turnoBoot(2);
             cantidadTirosPosibles--;
             // turnoJugador(1);
+            // revisar que alguien haya ganado
             ganador = jugadorGanador();
+            pintarTablero();
             if (ganador != 0) {
                 pintarTablero();
-                System.out.println("hay ganador, jugador " + ganador);
+                System.out.println("hay ganador, jugador " + ((ganador==2)?"BOOT X":"USUARIO O"));
                 asignarGanador(ganador);
                 finDeJuego = true;
-            } else {
-
-                if (cantidadTirosPosibles > 0) {
-                    turnoJugador(1);
-                    cantidadTirosPosibles--;
-                    pintarTablero();
-                    // turnoBoot(2);
-                    ganador = jugadorGanador();
-                    if (ganador != 0) {
-
-                        System.out.println("hay ganador, jugador " + ganador);
-                        asignarGanador(ganador);
-                        finDeJuego = true;
-                    }
-                    if (cantidadTirosPosibles == 0) {
-                        pintarTablero();
-                        System.out.println("Nadie Gano ");
-                        asignarGanador(0);
-                        finDeJuego = true;
-                    }
-                } else {
+            }
+            else{
+                if (cantidadTirosPosibles == 0) {
                     pintarTablero();
                     System.out.println("Nadie Gano ");
                     asignarGanador(0);
                     finDeJuego = true;
                 }
-
             }
-
-            // bootValorarMatriz(2);
-            // System.out.println("val matriz");
-            // for (int i = 0; i < 3; i++) {
-            // for (int j = 0; j < 3; j++) {
-            // System.out.print(matrizBoot[i][j] + "|");
-            // }
-            // System.out.println();
-            // }
-            // System.out.println("val matriz");
         }
     }
 
@@ -145,43 +124,33 @@ public class Totito {
                 if (matriz[i][j] != 0) {
                     // horizontal
                     if (revisarCasilla(i - 2, j, matriz[i][j]) && revisarCasilla(i - 1, j, matriz[i][j])) {
-                        System.out.println("condicion1");
                         return matriz[i][j];
                     }
                     if (revisarCasilla(i + 2, j, matriz[i][j]) && revisarCasilla(i + 1, j, matriz[i][j])) {
-                        System.out.println("condicion2");
                         return matriz[i][j];
                     }
                     // vertical
                     if (revisarCasilla(i, j - 2, matriz[i][j]) && revisarCasilla(i, j - 1, matriz[i][j])) {
-                        System.out.println("condicion3 x" + j + " y " + i);
                         return matriz[i][j];
                     }
                     if (revisarCasilla(i, j + 2, matriz[i][j]) && revisarCasilla(i, j + 1, matriz[i][j])) {
-                        System.out.println("condicion4");
                         return matriz[i][j];
                     }
-
                     // diagonal
                     if (revisarCasilla(i + 2, j + 2, matriz[i][j]) && revisarCasilla(i + 1, j + 1, matriz[i][j])) {
-                        System.out.println("condicion5");
                         return matriz[i][j];
                     }
                     if (revisarCasilla(i + 2, j - 2, matriz[i][j]) && revisarCasilla(i + 1, j - 1, matriz[i][j])) {
-                        System.out.println("condicion6");
                         return matriz[i][j];
                     }
                     if (revisarCasilla(i - 2, j + 2, matriz[i][j]) && revisarCasilla(i - 1, j + 1, matriz[i][j])) {
-                        System.out.println("condicion7");
                         return matriz[i][j];
                     }
                     if (revisarCasilla(i - 2, j - 2, matriz[i][j]) && revisarCasilla(i - 1, j - 1, matriz[i][j])) {
-                        System.out.println("condicion8");
                         return matriz[i][j];
                     }
                 }
             }
-
         }
         return res;
     }
@@ -196,9 +165,7 @@ public class Totito {
                 }
             }
         }
-
         return res;
-
     }
 
     public static boolean posicionVacia(int x, int y) {
@@ -215,7 +182,6 @@ public class Totito {
         int posX = 0;
         int posY = 0;
         boolean seleccionoPosicionVacia = false;
-
         do {
             posX = solicitarNumero("Ingrese la coordenada en X", 0, 2);
             posY = solicitarNumero("Ingrese la coordenada en Y", 0, 2);
@@ -227,9 +193,10 @@ public class Totito {
 
         } while (!seleccionoPosicionVacia);
         matriz[posY][posX] = tipoFicha;
-
+        pintarTablero();
+        System.out.println("El jugador tiro. ");
+        scanner.nextLine();
     }
-
     /*********** FIN USUARIO JUGADOR ***********/
 
     /*********** BOOT JUGADOR ***********/
@@ -241,19 +208,16 @@ public class Totito {
         if (cantMejoresTiros == 1) {
             y = matrizMejoresTirosYX[0][0];
             x = matrizMejoresTirosYX[0][1];
-
         } else {
             int tiroFinal = generarNumeroRandom(0, cantMejoresTiros - 1);
             y = matrizMejoresTirosYX[tiroFinal][0];
             x = matrizMejoresTirosYX[tiroFinal][1];
-
         }
+        matriz[y][x] = tipoCasillaBoot;
+        pintarTablero();
         System.out.println("El boot tira");
         System.out.println("Y " + y + " X " + x);
         scanner.nextLine();
-
-        matriz[y][x] = tipoCasillaBoot;
-
     }
 
     public static int bootMejorTiro() {
@@ -265,7 +229,6 @@ public class Totito {
                     maximo = matrizBoot[i][j];
                 }
             }
-
         }
 
         for (int i = 0; i < 3; i++) {
@@ -276,12 +239,8 @@ public class Totito {
                     cantidadMejoresTiros++;
                 }
             }
-
         }
-        // System.out.println("maximo: "+ maximo + " can"+cantidadMejoresTiros);
-
         return cantidadMejoresTiros;
-
     }
 
     /**
@@ -298,41 +257,30 @@ public class Totito {
                 valorPos = 0;
                 tmp = 0;
                 if (matriz[i][j] == 0) {
-                    // vacia
                     // arriba
-                    // System.out.println("*****Matriz i" + i + " j " + j);
-                    // int cont = 0;
                     tmp = bootValorCasilla(j, i, 0, 1, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     // abajo
                     tmp = bootValorCasilla(j, i, 0, -1, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     // derecha
                     tmp = bootValorCasilla(j, i, 1, 0, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     // izquierda
                     tmp = bootValorCasilla(j, i, -1, 0, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     // arriba derecha
                     tmp = bootValorCasilla(j, i, 1, 1, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     // arriba izquierda
                     tmp = bootValorCasilla(j, i, -1, 1, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     // abajo derecha
                     tmp = bootValorCasilla(j, i, 1, -1, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     // abajo izquierda
                     tmp = bootValorCasilla(j, i, -1, -1, tipoCasillaBoot);
                     valorPos = (tmp > valorPos) ? tmp : valorPos;
-                    // System.err.println(" tmp " + tmp + " cont" + (cont++));
                     matrizBoot[i][j] = valorPos;
                 } else {
                     matrizBoot[i][j] = 0;
@@ -345,9 +293,6 @@ public class Totito {
         int res = 1;
         int x1 = multX + x;
         int y1 = multY + y;
-        // System.out.print("Posx " + x + " pos y " + y + " ");
-        // System.out.print(" mod x " + multX + " mod y " + multY);
-        // System.out.print(" y1 " + y1 + " x1 " + x1 + " \n");
 
         if (dentroRango(x1, y1)) {
             int x2 = multX + x1;
@@ -359,14 +304,9 @@ public class Totito {
             if (!dentroRango(1, y2)) {
                 y2 = x - 2 * multY;
             }
-
             if (dentroRango(x2, y2)) {
                 int p1 = matriz[y1][x1];
                 int p2 = matriz[y2][x2];
-                // System.out.print("Posx " + x + " pos y " + y + " ");
-                // System.out.print(" mod x " + multX + " mod y " + multY);
-                // System.out.print(" y1 " + y1 + " x1 " + x1 + " p1 " + p1);
-                // System.out.print(" y2 " + y2 + " x2 " + x2 + " p2 " + p2 + "\n");
                 if ((p1 == p2) && (p1 == 0)) {
                     // estan vacias
                     res = 2;
@@ -393,10 +333,8 @@ public class Totito {
                         }
                     }
                 }
-
             }
         }
-
         return res;
     }
 
@@ -407,30 +345,13 @@ public class Totito {
                 res = true;
             }
         }
-
         return res;
-
     }
-
     /*********** FIN BOOT JUGADOR ***********/
 
     /*********** PINTAR TABLERO ***********/
-
     public static void pintarTablero() {
         for (int i = 0; i < matriz.length; i++) {
-
-            // String linea = "";
-            // for (int j = 0; j < matriz[0].length; j++) {
-            // linea = linea +matriz[i][j] + "|";
-            // }
-            // System.out.println(linea);
-            // if (i < (matriz[0].length - 1)) {
-            // for (int k = 0; k < linea.length(); k++) {
-            // System.out.print("-");
-            // }
-            // }
-            // System.out.println();
-
             String linea0 = "";
             String linea1 = "";
             String linea2 = "";
@@ -444,11 +365,9 @@ public class Totito {
                     linea2 = linea2 + " | ";
                 }
             }
-
             System.out.println(linea0);
             System.out.println(linea1);
             System.out.println(linea2);
-
             if (i < (matriz[0].length - 1)) {
                 for (int k = 0; k < linea2.length(); k++) {
                     System.out.print("-");
@@ -487,17 +406,17 @@ public class Totito {
         }
         return res;
     }
-
     /*********** FIN PINTAR TABLERO ***********/
 
     /*********** FUNCION DE AYUYA ***********/
-
+    /**
+     * Random desde [min..max] inclusivo
+     * @param min
+     * @param max
+     * @return
+     */
     public static int generarNumeroRandom(int min, int max) {
-        // int tmp = random.nextInt(max-min)+min;
-        // System.out.println(tmp);
-
-        // return tmp;
-        return random.nextInt(max - min) + min;
+        return random.nextInt((max+1) - min) + min;
     }
 
     public static int solicitarNumero(String mensaje, int limiteInferior, int limiteSuperior) {
@@ -527,32 +446,5 @@ public class Totito {
         } while (hayErrorNumeroIngresado);
         return numeroIngresado;
     }
-
     /*********** FIN FUNCION DE AYUYA ***********/
 }
-
-/*
- * 
- * String linea0 = "";
- * for (int j = 0; j < matriz[0].length; j++) {
- * linea0 = linea0 + pintarFila(matriz[i][j], 0);
- * if ((j == 0) || (j == 1)) {
- * linea0 = linea0 + " | ";
- * }
- * }
- * 
- * String linea1 = "";
- * for (int j = 0; j < matriz[0].length; j++) {
- * linea1 = linea1 + pintarFila(matriz[i][j], 1);
- * if ((j == 0) || (j == 1)) {
- * linea1 = linea1 + " | ";
- * }
- * }
- * String linea2 = "";
- * for (int j = 0; j < matriz[0].length; j++) {
- * linea2 = linea2 + pintarFila(matriz[i][j], 2);
- * if ((j == 0) || (j == 1)) {
- * linea2 = linea2 + " | ";
- * }
- * }
- */
