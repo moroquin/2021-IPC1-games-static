@@ -1,4 +1,4 @@
-# Totito - Usuario vrs Computadora
+# Totito - Usuario vrs Computadora (java consola - sin clases - static)
 
 A continuación voy a hacer una breve descripción de una solución para un juego de totito el cual permita jugar contra la computadora, la computadora debe realizar el tiro más inteligente posible.
 
