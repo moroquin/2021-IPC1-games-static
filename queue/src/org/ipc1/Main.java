@@ -1,7 +1,5 @@
 package org.ipc1;
 
-import javax.xml.transform.stax.StAXResult;
-
 import org.ipc1.course.Student;
 import org.ipc1.queue.Queue;
 
