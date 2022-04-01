@@ -16,16 +16,24 @@ public class Queue {
             root = new Node(data);
         }
         else{
-            Node tmp = root;
-
-            while(tmp.getNext()!=null){
-                System.out.println("          "+tmp.getData().toString()+".next = "+tmp.getNext().getData().toString());
-                tmp = tmp.getNext();
-            }
-
+            // Node tmp = root;
+            // while(tmp.getNext()!=null){
+            //     System.out.println("          "+tmp.getData().toString()+".next = "+tmp.getNext().getData().toString());
+            //     tmp = tmp.getNext();
+            // }
+            Node tmp = getLastNode(root);
             System.out.println("            "+tmp.getData().toString()+".next = "+data);
             tmp.setNext(data);
         }
+    }
+
+    private Node getLastNode(Node act){
+        if (act.getNext() != null){
+            return getLastNode(act.getNext());
+            //realizar mi ciclo
+            //recursión
+        }
+        return act;
     }
 
     public boolean isEmpty(){
